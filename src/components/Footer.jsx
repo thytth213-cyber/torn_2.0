@@ -28,10 +28,38 @@ export default function Footer() {
             </p>
 
             <div className="social" style={{ marginTop: 14 }}>
-              <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
-              <a href="#" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
-              <a href="#" aria-label="LinkedIn"><i className="fa-brands fa-linkedin-in"></i></a>
-              <a href="#" aria-label="Chat"><i className="fa-solid fa-comment-dots"></i></a>
+              {/* External social links open in a new tab and use rel for security */}
+              <a
+                href="https://www.facebook.com/tornado"
+                aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="fa-brands fa-facebook-f"></i>
+              </a>
+
+              <a
+                href="https://www.youtube.com/@tornado"
+                aria-label="YouTube"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="fa-brands fa-youtube"></i>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/company/tornado"
+                aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="fa-brands fa-linkedin-in"></i>
+              </a>
+
+              {/* Chat uses mailto as a fallback contact method */}
+              <a href="mailto:contact@tornado.vn" aria-label="Email" rel="noopener noreferrer">
+                <i className="fa-solid fa-comment-dots"></i>
+              </a>
             </div>
           </div>
 
@@ -57,9 +85,21 @@ export default function Footer() {
           <div>
             <h4>Contact</h4>
             <div className="f-links">
-              <a href="#"><i className="fa-solid fa-location-dot"></i> Hanoi, Vietnam</a>
-              <a href="#"><i className="fa-solid fa-phone"></i> +84 900 000 000</a>
-              <a href="#"><i className="fa-solid fa-envelope"></i> contact@tornado.vn</a>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Hanoi%2C+Vietnam"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="fa-solid fa-location-dot"></i> HongKong, HongKong
+              </a>
+
+              <a href="tel:+84900000000">
+                <i className="fa-solid fa-phone"></i> +84 900 000 000
+              </a>
+
+              <a href="mailto:contact@tornado.vn">
+                <i className="fa-solid fa-envelope"></i> contact@tornado.hk
+              </a>
             </div>
           </div>
         </div>
@@ -72,3 +112,17 @@ export default function Footer() {
     </footer>
   );
 }
+
+/*
+  Footer developer comments:
+
+  - Social links currently use `href="#"`. For real external links, open in
+    a new tab (`target="_blank"`) and add `rel="noopener noreferrer"` for
+    security. If links are internal, use `Link` from react-router-dom.
+
+  - Contact details are static. If they come from an API (or admin panel),
+    wire them to the CMS so non-devs can update them without redeploying.
+
+  - Consider making the copyright year derived from a build-time constant
+    or environment variable if you need different licensing text per env.
+*/

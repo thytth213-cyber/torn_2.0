@@ -2,7 +2,8 @@
 .app-main {
   width: 100%;
   overflow-x: hidden;
-  margin-top: 130px;
+  /* use CSS variable from header to offset fixed header height instead of a magic margin */
+  padding-top: var(--header-offset, 130px);
 }
 
 /* ===== HERO SECTION ===== */
@@ -13,7 +14,7 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  min-height: 600px;
+  min-height: 720px;
   background: linear-gradient(135deg, #0b1f3a 0%, #153b6f 50%, #0b1f3a 100%);
   display: flex;
   align-items: center;
@@ -32,13 +33,30 @@
   min-height: 600px;
 }
 
+
 .hero-slide {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 500px;
+  min-height: 620px;
   width: 100% !important;
   height: auto !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3,7,18,0.28) 0%, rgba(3,7,18,0.46) 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .hero-slide .container {
@@ -51,8 +69,8 @@
 
 .hero-slide-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 55% 45%;
+  gap: 48px;
   align-items: center;
   width: 100%;
   max-width: var(--container);
@@ -63,19 +81,34 @@
   z-index: 2;
 }
 
+.hero-content h1, .hero-content p {
+  text-shadow: 0 6px 18px rgba(2,6,23,0.6);
+}
+
 .hero-content h1 {
-  font-size: 48px;
-  font-weight: 900;
-  line-height: 1.2;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.08;
   margin-bottom: 20px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.6px;
 }
 
 .hero-content p {
   font-size: 18px;
-  color: #cbd5e1;
+  color: #d8e4f5;
   margin-bottom: 30px;
   line-height: 1.6;
+}
+
+.hero-cta {
+  display: inline-block;
+  background: linear-gradient(90deg, #ff7a59 0%, #ff5a7a 100%);
+  color: white;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(17,24,39,0.25);
+  text-decoration: none;
 }
 
 .hero-image {
@@ -84,6 +117,59 @@
   justify-content: center;
   flex: 1;
   min-width: 0;
+}
+
+/* Background wrapper for slides (no <img> tags) */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: saturate(1.02) contrast(1.02);
+  z-index: 0;
+}
+
+/* Ensure slide content sits above the background */
+.hero-slide .container,
+.hero-slide .hero-slide-content,
+.hero-slide .hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Vertical pagination on the right */
+.hero-section #heroPagination {
+  position: absolute;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  bottom: auto !important;
+  left: auto !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+.hero-section #heroPagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  margin: 6px 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35) !important;
+}
+
+.hero-section #heroPagination .swiper-pagination-bullet-active {
+  background: #fff !important;
+}
+
+.hero-image-img {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
 }
 
 .placeholder-image {
@@ -139,7 +225,7 @@
   }
 
   .hero-content h1 {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .hero-content p {
@@ -150,7 +236,92 @@
     aspect-ratio: 1;
     font-size: 60px;
   }
+  .hero-image-img {
+    height: 280px;
+  }
 }
+
+/* ===== Global button styles ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary {
+  background: linear-gradient(90deg,#0ea5e9,#06b6d4);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 30px rgba(3,7,18,0.12);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--blue-700);
+  border: 2px solid rgba(13, 67, 161, 0.08);
+}
+
+/* ===== Section headers & layout polish ===== */
+.section-header {
+  text-align: left;
+  margin-bottom: 34px;
+}
+
+.section-header h2 { color: var(--blue-900); font-size: 34px; }
+.section-header p { color: var(--muted); margin-top: 6px; }
+
+/* centralized container max width */
+.container { max-width: var(--container); margin: 0 auto; }
+
+/* ===== Project / Product cards ===== */
+.project-card, .solution-card {
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.project-card:hover, .solution-card:hover { transform: translateY(-8px); box-shadow: var(--shadow2); }
+
+.project-image img, .about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-image { height: 260px; overflow: hidden; }
+
+/* Product icons/cards alignment */
+.solutions-grid .solution-card { padding: 28px; text-align: center; }
+.solution-icon { font-size: 40px; }
+
+/* ===== Partners & logos ===== */
+.partners-grid { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: center; }
+.partner-card { width: 160px; height: 90px; display:flex; align-items:center; justify-content:center; background: #fff; border-radius: 8px; box-shadow: var(--shadow1); }
+.partner-logo img { max-width: 100%; max-height: 70px; object-fit: contain; }
+
+/* ===== Footer tweak ===== */
+footer { background: #071129; color: #bcd1e6; padding: 32px 20px; }
+footer a { color: #dbeafe; }
+
+/* ===== Hero text slide-in (stronger) ===== */
+.animate-on-slide { transform: translateX(-28px); opacity: 0; transition: transform .6s ease, opacity .6s ease; }
+.swiper-slide-active .animate-on-slide { transform: translateX(0); opacity: 1; }
+
+/* responsive tweaks */
+@media (max-width: 1024px) {
+  .hero-slide-content { grid-template-columns: 1fr; gap: 20px; }
+  .hero-image { display: block; }
+}
+
 
 /* ===== SECTION HEADER ===== */
 .section-header {
